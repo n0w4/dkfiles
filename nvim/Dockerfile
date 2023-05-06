@@ -4,7 +4,37 @@ FROM debian:bullseye
 RUN apt update -y && apt upgrade -y
 
 # install some utils
-RUN apt install git openssl curl wget build-essential ca-certificates -y 
+RUN apt install \
+    git \
+    openssl \
+    curl \
+    wget \
+    unzip \
+    locales \
+    ripgrep \
+    locales-all \
+    build-essential \
+    libreadline-dev \
+    libncursesw5-dev \
+    libssl-dev \
+    libsqlite3-dev \
+    tk-dev \
+    libgdbm-dev \
+    libc6-dev \
+    libbz2-dev \
+    libffi-dev \
+    zlib1g-dev \
+    python3 \
+    python3-pip \
+    fd-find \
+    ca-certificates -y
+
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen
+
+ENV LC_ALL en_US.UTF-8  
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 # install nvim
 RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz -O /opt/nvim-linux64.tar.gz \
